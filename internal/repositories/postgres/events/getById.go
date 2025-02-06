@@ -2,15 +2,14 @@ package events
 
 import (
 	"database/sql"
-	"errors"
+	"fmt"
 
-	"github.com/jeissoni/EventLine/internal/domain/entities"
+	custonErrors "github.com/jeissoni/EventLine/internal/domain/custonErrors"
+	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
-var ErrNotFound = errors.New("event not found")
-
-func (r Repository) GetByID(id int) (entities.Event, error) {
-	var event entities.Event
+func (r Repository) GetByID(id int) (domain.Event, error) {
+	var event domain.Event
 	err := r.Database.QueryRow("SELECT * FROM events WHERE id = $1", id).Scan(
 		&event.ID,
 		&event.OrganizerID,
@@ -26,12 +25,14 @@ func (r Repository) GetByID(id int) (entities.Event, error) {
 		&event.ImageUrl,
 	)
 
-	if err != sql.ErrNoRows {
-		return entities.Event{}, ErrNotFound
-	}
-
 	if err != nil {
-		return entities.Event{}, err
+
+		if err == sql.ErrNoRows {
+			return domain.Event{},
+				fmt.Errorf("%w: %s", custonErrors.ErrNotFound, err.Error())
+		}
+
+		return domain.Event{}, err
 	}
 
 	return event, nil
