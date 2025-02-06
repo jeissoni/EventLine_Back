@@ -1,10 +1,10 @@
 package events
 
 import (
-	"github.com/jeissoni/EventLine/internal/domain/entities"
+	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
-func (s *Service) Create(events entities.Event) error {
+func (s *Service) Create(events domain.Event) error {
 	err := s.Repository.Guardar(events)
 	if err != nil {
 		return err

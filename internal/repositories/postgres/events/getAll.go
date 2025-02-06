@@ -1,23 +1,21 @@
 package events
 
 import (
-	"github.com/jeissoni/EventLine/internal/domain/entities"
+	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
-func (r Repository) GetAll() ([]entities.Event, error) {
+func (r Repository) GetAll() ([]domain.Event, error) {
 
 	rows, err := r.Database.Query("SELECT * FROM events")
 
 	if err != nil {
-		return []entities.Event{}, err
+		return []domain.Event{}, err
 	}
 
-	defer rows.Close()
-
-	var events []entities.Event
+	var events []domain.Event
 
 	for rows.Next() {
-		var event entities.Event
+		var event domain.Event
 		err := rows.Scan(
 			&event.ID,
 			&event.OrganizerID,
@@ -34,7 +32,7 @@ func (r Repository) GetAll() ([]entities.Event, error) {
 		)
 
 		if err != nil {
-			return []entities.Event{}, err
+			return []domain.Event{}, err
 		}
 
 		events = append(events, event)

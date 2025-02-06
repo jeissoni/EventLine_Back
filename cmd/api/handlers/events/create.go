@@ -2,12 +2,12 @@ package events
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/jeissoni/EventLine/internal/domain/entities"
+	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
 func (h EventHandler) CreateEvent(c *fiber.Ctx) error {
 
-	var event entities.Event
+	var event domain.Event
 
 	err := c.BodyParser(&event)
 	if err != nil {

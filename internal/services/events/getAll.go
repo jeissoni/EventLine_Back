@@ -1,14 +1,12 @@
 package events
 
-import (
-	"github.com/jeissoni/EventLine/internal/domain/entities"
-)
+import domain "github.com/jeissoni/EventLine/internal/domain/entities"
 
-func (s *Service) GetAll() ([]entities.Event, error) {
+func (s *Service) GetAll() ([]domain.Event, error) {
 	event, err := s.Repository.GetAll()
 	if err != nil {
 
-		return []entities.Event{}, err
+		return []domain.Event{}, err
 	}
 	return event, nil
 }

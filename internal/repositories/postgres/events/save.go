@@ -1,10 +1,8 @@
 package events
 
-import (
-	"github.com/jeissoni/EventLine/internal/domain/entities"
-)
+import domain "github.com/jeissoni/EventLine/internal/domain/entities"
 
-func (r Repository) Guardar(event entities.Event) error {
+func (r Repository) Guardar(event domain.Event) error {
 
 	_, err := r.Database.Exec("INSERT INTO events (organizer_id, name, description, location, start_date, end_date, status, base_price, total_capacity, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
 		event.OrganizerID,
