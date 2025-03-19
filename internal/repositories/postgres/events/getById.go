@@ -8,19 +8,17 @@ import (
 	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
-func (r Repository) GetByID(id int) (domain.Event, error) {
+func (r Repository) GetByID(event_id string) (domain.Event, error) {
 	var event domain.Event
-	err := r.Database.QueryRow("SELECT * FROM events WHERE id = $1", id).Scan(
+	err := r.Database.QueryRow("SELECT * FROM events WHERE event_id = $1", event_id).Scan(
 		&event.EventID,
 		&event.OrganizerID,
 		&event.CategoryID,
-		&event.VenueID,
 		&event.Title,
 		&event.Description,
 		&event.ShortDescription,
 		&event.StartDate,
 		&event.EndDate,
-		&event.DoorsOpenDate,
 		&event.IsPublished,
 		&event.IsFeatured,
 		&event.IsPrivate,
@@ -39,7 +37,6 @@ func (r Repository) GetByID(id int) (domain.Event, error) {
 			return domain.Event{},
 				fmt.Errorf("%w: %s", custonErrors.ErrNotFound, err.Error())
 		}
-
 		return domain.Event{}, err
 	}
 

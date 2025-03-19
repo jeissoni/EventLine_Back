@@ -4,20 +4,23 @@ import (
 	"errors"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	domain "github.com/jeissoni/EventLine/internal/domain/custonErrors"
 )
 
 func (h EventHandler) GetByID(c *fiber.Ctx) error {
 
-	id, err := c.ParamsInt("id")
+	id_event := c.Params("id")
+
+	_, err := uuid.Parse(id_event)
 
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
+			"error": "Invalid UUID",
 		})
 	}
 
-	event, err := h.EventService.GetByID(id)
+	event, err := h.EventService.GetByID(id_event)
 
 	if err != nil {
 

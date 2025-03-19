@@ -8,8 +8,8 @@ import (
 	domain "github.com/jeissoni/EventLine/internal/domain/entities"
 )
 
-func (s *Service) GetByID(id int) (domain.Event, error) {
-	event, err := s.Repository.GetByID(id)
+func (s *Service) GetByID(event_id string) (domain.Event, error) {
+	event, err := s.Repository.GetByID(event_id)
 	if err != nil {
 
 		if errors.Is(err, custonErrors.ErrNotFound) {
