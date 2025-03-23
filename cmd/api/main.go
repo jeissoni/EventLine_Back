@@ -43,6 +43,7 @@ func main() {
 	app.Get("/events/:id", eventsHandler.GetByID)
 	app.Delete("/events/:id", eventsHandler.Delete)
 	app.Get("/events", eventsHandler.GetAll)
+	app.Put("/events/", eventsHandler.Update)
 
 	log.Fatalln(app.Listen(":3000"))
 
