@@ -21,6 +21,7 @@ func (r Repository) Update(event domain.Event) error {
 		event.TicketSaleStart,
 		event.TicketSaleEnd,
 		event.MaxTicketsPerPerson,
+		event.EventID,
 	)
 
 	if err != nil {
